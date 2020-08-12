@@ -1,30 +1,11 @@
-// const fs = require("fs");
-// fs.readFile("readme.md", "utf8", (err, data) => {
-//   console.log(data);
-// });
-
 const core = require("@actions/core");
-const github = require("@actions/github");
-
-// try {
-//   // `who-to-greet` input defined in action metadata file
-//   const nameToGreet = core.getInput("who-to-greet");
-//   console.log(`Hello ${nameToGreet}!`);
-//   const time = new Date().toTimeString();
-//   core.setOutput("time", time);
-//   // Get the JSON webhook payload for the event that triggered the workflow
-//   const payload = JSON.stringify(github.context.payload, undefined, 2);
-//   console.log(`The event payload: ${payload}`);
-// } catch (error) {
-//   core.setFailed(error.message);
-// }
-
-const spawn = require("child_process").spawn;
+const fs = require("fs");
 const path = require("path");
+const { spawn } = require("child_process");
 const { Toolkit } = require("actions-toolkit");
+
 const exec = (cmd, args = []) =>
   new Promise((resolve, reject) => {
-    console.log(`Started: ${cmd} ${args.join(" ")}`);
     const app = spawn(cmd, args, { stdio: "inherit" });
     app.on("close", code => {
       if (code !== 0) {
@@ -37,39 +18,23 @@ const exec = (cmd, args = []) =>
     app.on("error", reject);
   });
 
-// const main = async () => {
-//   await exec("bash", [
-//     path.join(__dirname, "./script.sh"),
-//     "Mhmdabed11",
-//     "Mhmdabed11",
-//     "4fb3774e1a85590148bbedb9d36e3190e4840590"
-//   ]);
-// };
-const fs = require("fs");
+const commitFile = async () => {
+  await exec("git", ["config", "--global", "user.email", "mohammad_aabed@hotmail.com"]);
+  await exec("git", ["config", "--global", "user.name", "mhmdabed11"]);
+  await exec("git", ["add", "README.md"]);
+  await exec("git", ["commit", "-m", "update"]);
+  await exec("git", ["push"]);
+};
 
 Toolkit.run(
   async tools => {
-    async function main() {
-      await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
-      await exec("git", ["add", "."]);
-      await exec("git", ["commit", "-m", "update"]);
-      await exec("git", ["push"]);
-    }
-    fs.readFile("./README.md", "utf8", (err, data) => {
-      console.log("HELLO");
-      console.log(data);
-      const string = data.split("\n");
-      string.push("## Mohammad Abed");
-      fs.writeFileSync("./README.md", string.join("\n"));
-      main().catch(err => {
-        console.error(err);
-        console.error(err.stack);
-        process.exit(err.code || -1);
-      });
-    });
+    const readmeContent = fs.readFileSync("./README.md", "utf-8").split("\n");
+    console.log(readmeContent);
+    await commitFile();
+    tools.exit.success("Updated ");
   },
   {
-    event: ["schedule", "workflow_dispatch", "push"],
+    event: ["schedule", "workflow_dispatch"],
     token: "4fb3774e1a85590148bbedb9d36e3190e4840590"
   }
 );

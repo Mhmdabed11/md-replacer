@@ -1,17 +1,16 @@
-<<<<<<< HEAD
 name: "mohammad-abed-test-action"
-=======
-name: "mohammad-aabed-action-1"
->>>>>>> 8f63cf6f3ece66e1e3b62083ab103df89b33f54e
-description: "Greet someone and record the time"
+description: Updates README with the recent GitHub activity of a user
+author: jamesgeorge007
+
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
-    required: true
-    default: "World"
-outputs:
-  time: # id of output
-    description: "The time we greeted you"
+  USERNAME:
+    description: "Your GitHub username"
+    default: Mhmdabed11
+
+branding:
+  color: yellow
+  icon: activity
+
 runs:
-  using: "node12"
-  main: "index.js"
+  using: node12
+  main: ./index.js
