@@ -68,7 +68,7 @@ Toolkit.run(
     }
   },
   {
-    event: ["schedule", "workflow_dispatch", "push"],
-    token: "4fb3774e1a85590148bbedb9d36e3190e4840590"
+    event: ["schedule", "workflow_dispatch", "push"]
+    // token: "4fb3774e1a85590148bbedb9d36e3190e4840590"
   }
 );
