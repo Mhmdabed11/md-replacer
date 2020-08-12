@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: "mohammad-abed-test-action"
+=======
+name: "mohammad-aabed-action-1"
+>>>>>>> 8f63cf6f3ece66e1e3b62083ab103df89b33f54e
 description: "Greet someone and record the time"
 inputs:
   who-to-greet: # id of input
