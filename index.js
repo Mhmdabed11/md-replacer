@@ -37,13 +37,20 @@ const exec = (cmd, args = []) =>
     app.on("error", reject);
   });
 
+// const main = async () => {
+//   await exec("bash", [
+//     path.join(__dirname, "./script.sh"),
+//     "Mhmdabed11",
+//     "Mhmdabed11",
+//     "4fb3774e1a85590148bbedb9d36e3190e4840590"
+//   ]);
+// };
+
 const main = async () => {
-  await exec("bash", [
-    path.join(__dirname, "./script.sh"),
-    "Mhmdabed11",
-    "Mhmdabed11",
-    "4fb3774e1a85590148bbedb9d36e3190e4840590"
-  ]);
+  await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
+  await exec("git", ["add", "."]);
+  await exec("git", ["commit", "-m", "update"]);
+  await exec("git", ["push"]);
 };
 
 main().catch(err => {
