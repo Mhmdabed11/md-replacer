@@ -41,7 +41,7 @@ Toolkit.run(
     tools.exit.success("Updated ");
   },
   {
-    event: ["schedule", "workflow_dispatch", "push"]
-    // secrets: ["GITHUB_TOKEN"]
+    event: ["schedule", "workflow_dispatch", "push"],
+    secrets: ["GITHUB_TOKEN"]
   }
 );
