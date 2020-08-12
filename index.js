@@ -21,7 +21,7 @@ const github = require("@actions/github");
 
 const spawn = require("child_process").spawn;
 const path = require("path");
-
+const { Toolkit } = require("actions-toolkit");
 const exec = (cmd, args = []) =>
   new Promise((resolve, reject) => {
     console.log(`Started: ${cmd} ${args.join(" ")}`);
@@ -46,15 +46,23 @@ const exec = (cmd, args = []) =>
 //   ]);
 // };
 
-const main = async () => {
-  await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
-  await exec("git", ["add", "."]);
-  await exec("git", ["commit", "-m", "update"]);
-  await exec("git", ["push"]);
-};
+Toolkit.run(
+  async tools => {
+    const main = async () => {
+      await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
+      await exec("git", ["add", "."]);
+      await exec("git", ["commit", "-m", "update"]);
+      await exec("git", ["push"]);
+    };
 
-main().catch(err => {
-  console.error(err);
-  console.error(err.stack);
-  process.exit(err.code || -1);
-});
+    main().catch(err => {
+      console.error(err);
+      console.error(err.stack);
+      process.exit(err.code || -1);
+    });
+  },
+  {
+    event: ["schedule", "workflow_dispatch"],
+    secrets: ["GITHUB_TOKEN"]
+  }
+);
