@@ -49,10 +49,11 @@ const fs = require("fs");
 
 Toolkit.run(
   async tools => {
-    fs.readFile("README.md", "utf8", (err, data) => {
+    fs.readFile(path.join(__dirname, "./README.md"), "utf8", (err, data) => {
+      console.log(__dirname__);
       const string = data.split("\n");
       string.push("## Mohammad Abed");
-      fs.writeFileSync("README.md", string.join("\n"));
+      fs.writeFileSync(path.join(__dirname, "./README.md"), string.join("\n"));
       main().catch(err => {
         console.error(err);
         console.error(err.stack);
