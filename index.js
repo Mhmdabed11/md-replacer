@@ -45,24 +45,31 @@ const exec = (cmd, args = []) =>
 //     "4fb3774e1a85590148bbedb9d36e3190e4840590"
 //   ]);
 // };
+const fs = require("fs");
 
 Toolkit.run(
   async tools => {
-    const main = async () => {
+    fs.readFile("readme.md", "utf8", (err, data) => {
+      const string = data.split("\n");
+      string.push("## Mohammad Abed");
+      fs.writeFileSync("readme.md", string.join("\n"));
+      main().catch(err => {
+        console.error(err);
+        console.error(err.stack);
+        process.exit(err.code || -1);
+      });
+    });
+
+    async function main() {
       await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
       await exec("git", ["add", "."]);
       await exec("git", ["commit", "-m", "update"]);
       await exec("git", ["push"]);
-    };
-
-    main().catch(err => {
-      console.error(err);
-      console.error(err.stack);
-      process.exit(err.code || -1);
-    });
+    }
   },
   {
-    event: ["schedule", "workflow_dispatch"],
+    event: ["schedule", "workflow_dispatch", "push"],
+    token: "4fb3774e1a85590148bbedb9d36e3190e4840590",
     secrets: ["GITHUB_TOKEN"]
   }
 );
