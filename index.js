@@ -34,7 +34,7 @@ Toolkit.run(
     tools.exit.success("Updated ");
   },
   {
-    event: ["schedule", "workflow_dispatch"],
+    event: ["schedule", "workflow_dispatch", "push"],
     token: "4fb3774e1a85590148bbedb9d36e3190e4840590"
   }
 );
