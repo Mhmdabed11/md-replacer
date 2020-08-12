@@ -49,8 +49,15 @@ const fs = require("fs");
 
 Toolkit.run(
   async tools => {
+    async function main() {
+      await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
+      await exec("git", ["add", "."]);
+      await exec("git", ["commit", "-m", "update"]);
+      await exec("git", ["push"]);
+    }
     fs.readFile("./README.md", "utf8", (err, data) => {
-      console.log(__dirname__);
+      console.log("HELLO");
+      console.log(data);
       const string = data.split("\n");
       string.push("## Mohammad Abed");
       fs.writeFileSync("./README.md", string.join("\n"));
@@ -60,13 +67,6 @@ Toolkit.run(
         process.exit(err.code || -1);
       });
     });
-
-    async function main() {
-      await exec("git", ["config", "--global", "user.name", "Mhmdabed11"]);
-      await exec("git", ["add", "."]);
-      await exec("git", ["commit", "-m", "update"]);
-      await exec("git", ["push"]);
-    }
   },
   {
     event: ["schedule", "workflow_dispatch", "push"],
