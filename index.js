@@ -29,7 +29,9 @@ const commitFile = async () => {
 Toolkit.run(
   async tools => {
     const readmeContent = fs.readFileSync("./README.md", "utf-8").split("\n");
-    console.log(readmeContent);
+    const index = readmeContent.findIndex(entry => entry === "<!--TWITTER_STATS_START-->");
+    readmeContent[index + 1] = "## This is twitter stats";
+    fs.writeFileSync("./README.md", readmeContent.join("\n"));
     await commitFile();
     tools.exit.success("Updated ");
   },
