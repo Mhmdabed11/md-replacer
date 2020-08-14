@@ -87,8 +87,7 @@ Toolkit.run(
       }
 
       fs.writeFileSync("./README.md", readmeContent.join("\n"));
-      await commitFile();
-      tools.exit.success("Updated");
+      commitFile().then(() => tools.exit.success("Updated"));
     });
   },
   {
