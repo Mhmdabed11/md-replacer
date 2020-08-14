@@ -4,8 +4,10 @@ author: jamesgeorge007
 
 inputs:
   USERNAME:
-    description: "Your GitHub username"
-    default: Mhmdabed11
+    description: "Your Twitter username"
+  NUMBER_OF_TWEETS:
+    description: "Your number of tweets"
+    default: 5
 
 branding:
   color: yellow
