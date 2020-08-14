@@ -32,8 +32,8 @@ const exec = (cmd, args = []) =>
  * Commit changes to github
  */
 const commitFile = async () => {
-  await exec("git", ["config", "--global", "user.email", "mohammad_aabed@hotmail.com"]);
-  await exec("git", ["config", "--global", "user.name", "mhmdabed11"]);
+  await exec("git", ["config", "--global", "user.email", "mabed4297@gmail.com"]);
+  await exec("git", ["config", "--global", "user.name", "mhmdabed123"]);
   await exec("git", ["add", "README.md"]);
   await exec("git", ["commit", "-m", "update"]);
   await exec("git", ["push"]);
@@ -55,7 +55,6 @@ Toolkit.run(
   async tools => {
     const twitterUserName = core.getInput("USERNAME");
     const numberOfTweets = core.getInput("NUMBER_OF_TWEETS");
-
     getLatestTweets(twitterUserName, numberOfTweets).then(res => {
       tweets = res.data.map(tweet => ({
         text: tweet.text,
@@ -88,9 +87,9 @@ Toolkit.run(
       }
 
       fs.writeFileSync("./README.md", readmeContent.join("\n"));
+      await commitFile();
+      tools.exit.success("Updated");
     });
-    await commitFile();
-    tools.exit.success("Updated");
   },
   {
     event: ["schedule", "workflow_dispatch", "push"]
