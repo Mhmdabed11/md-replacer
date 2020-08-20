@@ -11,7 +11,7 @@ const md = require("markdown-it")({
 
 /**
  * Execute shell commands
- * @param {stringt} cmd
+ * @param {string} cmd
  * @param {array} args
  */
 const exec = (cmd, args = []) =>
@@ -39,13 +39,12 @@ const commitFile = async () => {
   await exec("git", ["push"]);
 };
 
-function getLatestTweets(username, count) {
+function getLatestTweets(username, count, token) {
   return axios.get(
     `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${username}&count=${count}&exclude_replies=true`,
     {
       headers: {
-        Authorization:
-          "Bearer AAAAAAAAAAAAAAAAAAAAAK0PGwEAAAAAtnxlgULEI2FJmfu2DLLv4sq7tSY%3DI1Nmq5rOdGafTOu7zuwP0NMZUnx9mnCVIHszOex2epyx9gnj9M"
+        Authorization: `Bearer ${token}`
       }
     }
   );
@@ -55,7 +54,8 @@ Toolkit.run(
   async tools => {
     const twitterUserName = core.getInput("USERNAME");
     const numberOfTweets = core.getInput("NUMBER_OF_TWEETS");
-    getLatestTweets(twitterUserName, numberOfTweets).then(res => {
+    console.log(process.env.NAME);
+    getLatestTweets(twitterUserName, numberOfTweets, twitterApiToken).then(res => {
       tweets = res.data.map(tweet => ({
         text: tweet.text,
         url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
